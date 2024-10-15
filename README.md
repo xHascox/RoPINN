@@ -4,13 +4,13 @@ RoPINN: Region Optimized Physics-Informed Neural Networks [[PDF]][https://arxiv.
 
 This paper proposes and theoretically studies a new training paradigm of PINNs as **region optimization** and presents [RoPINN](https://arxiv.org/abs/2405.14369) as a parctical algorithm,  which can bring the following benefits:
 
-- **Better generalization bound:** Introducing "region" can theoretically decrease the generalization error and provide a general theoretical framework that firstly reveals the balance between generalization and optimization.
-- **Efficienct practical algorithm:** We present RoPINN with a trust region calibration strategy, which can effectively accomplish the region optimization and reduce the gradient estimation error caused by sampling.
+- **Better generalization bound:** Introducing "region" can theoretically decrease the generalization error and provide a general theoretical framework that first reveals the balance between generalization and optimization.
+- **Efficient practical algorithm:** We present RoPINN with a trust region calibration strategy, which can effectively accomplish the region optimization and reduce the gradient estimation error caused by sampling.
 - **Boost extensive backbones:** RoPINN consistently improves various PINN backbones (i.e. PINN, KAN and PINNsFormer) on a wide range of PDEs (19 different tasks) without extra gradient calculation.
 
 ## Point Optimization vs. Region Optimization
 
-Unlike the conventional point oprimization, our proposed region optimization extends the optimization process of PINNs from isolated points to their continuous neighborhood region.
+Unlike the conventional point optimization, our proposed region optimization extends the optimization process of PINNs from isolated points to their continuous neighborhood region.
 
 <p align="center">
 <img src=".\pic\comparison.png" height = "150" alt="" align=center />
@@ -84,7 +84,7 @@ If you have any questions or want to use the code, please contact [wuhx23@mails.
 
 ## Acknowledgement
 
-We appreciate the following github repos a lot for their valuable code base or datasets:
+We appreciate the following GitHub repos a lot for their valuable code base or datasets:
 
 https://github.com/AdityaLab/pinnsformer
 
