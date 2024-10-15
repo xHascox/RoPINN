@@ -1,6 +1,6 @@
 # RoPINN (NeurIPS 2024)
 
-RoPINN: Region Optimized Physics-Informed Neural Networks [[PDF]][https://arxiv.org/abs/2405.14369]
+RoPINN: Region Optimized Physics-Informed Neural Networks [PDF][https://arxiv.org/abs/2405.14369]
 
 This paper proposes and theoretically studies a new training paradigm of PINNs as **region optimization** and presents [RoPINN](https://arxiv.org/abs/2405.14369) as a parctical algorithm,  which can bring the following benefits:
 
@@ -49,7 +49,7 @@ bash scripts/convection_region.sh # RoPINN: region optimization
 
 Specifically, we have included the following PINN models in this repo:
 
-- [x] PINN ( Journal of Computational Physics 2019) [[Paper]]()
+- [x] PINN ( Journal of Computational Physics 2019) [[Paper]](https://github.com/maziarraissi/PINNs)
 - [x] FLS - (IEEE Transactions on Artificial Intelligence 2022) [[Paper]](https://arxiv.org/abs/2109.09338)
 - [x] QRes - (SIAM 2021) [[Paper]](https://arxiv.org/abs/2101.08366)
 - [x] KAN - (arXiv 2024) [[Paper]](https://arxiv.org/abs/2404.19756)
