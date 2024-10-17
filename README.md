@@ -23,7 +23,7 @@ Unlike conventional point optimization, our proposed region optimization extends
 We present RoPINN for PINN training based on Monte Carlo sampling, which can effectively accomplish the region optimization without extra gradient calculation. A trust region calibration strategy is proposed to reduce the gradient estimation error caused by sampling for more trustworthy optimization.
 
 <p align="center">
-<img src=".\pic\algorithm.png" height = "380" alt="" align=center />
+<img src=".\pic\algorithm.png" height = "370" alt="" align=center />
 <br><br>
 <b>Figure 2.</b> RoPINN algorithm.
 </p>
@@ -49,7 +49,7 @@ bash scripts/convection_region.sh # RoPINN: region optimization
 
 Specifically, we have included the following PINN models in this repo:
 
-- [x] PINN ( Journal of Computational Physics 2019) [[Paper]](https://github.com/maziarraissi/PINNs)
+- [x] PINN (Journal of Computational Physics 2019) [[Paper]](https://github.com/maziarraissi/PINNs)
 - [x] FLS - (IEEE Transactions on Artificial Intelligence 2022) [[Paper]](https://arxiv.org/abs/2109.09338)
 - [x] QRes - (SIAM 2021) [[Paper]](https://arxiv.org/abs/2101.08366)
 - [x] KAN - (arXiv 2024) [[Paper]](https://arxiv.org/abs/2404.19756)
