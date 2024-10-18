@@ -27,17 +27,24 @@ device = args.device
 res, b_left, b_right, b_upper, b_lower = get_data([0, 1], [0, 1], 101, 101)
 res_test, _, _, _, _ = get_data([0, 1], [0, 1], 101, 101)
 
+if args.model == 'PINNsFormer' or args.model == 'PINNsFormer_Enc_Only':
+    res = make_time_sequence(res, num_step=5, step=1e-4)
+    b_left = make_time_sequence(b_left, num_step=5, step=1e-4)
+    b_right = make_time_sequence(b_right, num_step=5, step=1e-4)
+    b_upper = make_time_sequence(b_upper, num_step=5, step=1e-4)
+    b_lower = make_time_sequence(b_lower, num_step=5, step=1e-4)
+
 res = torch.tensor(res, dtype=torch.float32, requires_grad=True).to(device)
 b_left = torch.tensor(b_left, dtype=torch.float32, requires_grad=True).to(device)
 b_right = torch.tensor(b_right, dtype=torch.float32, requires_grad=True).to(device)
 b_upper = torch.tensor(b_upper, dtype=torch.float32, requires_grad=True).to(device)
 b_lower = torch.tensor(b_lower, dtype=torch.float32, requires_grad=True).to(device)
 
-x_res, t_res = res[:, 0:1], res[:, 1:2]
-x_left, t_left = b_left[:, 0:1], b_left[:, 1:2]
-x_right, t_right = b_right[:, 0:1], b_right[:, 1:2]
-x_upper, t_upper = b_upper[:, 0:1], b_upper[:, 1:2]
-x_lower, t_lower = b_lower[:, 0:1], b_lower[:, 1:2]
+x_res, t_res = res[:, ..., 0:1], res[:, ..., 1:2]
+x_left, t_left = b_left[:, ..., 0:1], b_left[:, ..., 1:2]
+x_right, t_right = b_right[:, ..., 0:1], b_right[:, ..., 1:2]
+x_upper, t_upper = b_upper[:, ..., 0:1], b_upper[:, ..., 1:2]
+x_lower, t_lower = b_lower[:, ..., 0:1], b_lower[:, ..., 1:2]
 
 
 def init_weights(m):
@@ -47,10 +54,13 @@ def init_weights(m):
 
 
 if args.model == 'KAN':
-    model = get_model(args).Model(width=[2, 5, 1], grid=5, k=3, grid_eps=1.0, \
+    model = get_model(args).Model(width=[2, 5, 5, 1], grid=5, k=3, grid_eps=1.0, \
                                   noise_scale_base=0.25, device=device).to(device)
 elif args.model == 'QRes':
     model = get_model(args).Model(in_dim=2, hidden_dim=256, out_dim=1, num_layer=2).to(device)
+    model.apply(init_weights)
+elif args.model == 'PINNsFormer' or args.model == 'PINNsFormer_Enc_Only':
+    model = get_model(args).Model(in_dim=2, hidden_dim=32, out_dim=1, num_layer=1).to(device)
     model.apply(init_weights)
 else:
     model = get_model(args).Model(in_dim=2, hidden_dim=512, out_dim=1, num_layer=4).to(device)
@@ -77,16 +87,15 @@ for i in tqdm(range(1000)):
 
     ###### Region Optimization with Monte Carlo Approximation ######
     def closure():
-        B, C = x_res.shape
         x_res_region_sample_list = []
         t_res_region_sample_list = []
         for i in range(sample_num):
-            x_region_sample = (torch.rand(B, C).to(x_res.device)) * np.clip(initial_region / gradient_variance,
-                                                                            a_min=0,
-                                                                            a_max=0.01)
-            t_region_sample = (torch.rand(B, C).to(t_res.device)) * np.clip(initial_region / gradient_variance,
-                                                                            a_min=0,
-                                                                            a_max=0.01)
+            x_region_sample = (torch.rand(x_res.shape).to(x_res.device)) * np.clip(initial_region / gradient_variance,
+                                                                                   a_min=0,
+                                                                                   a_max=0.01)
+            t_region_sample = (torch.rand(x_res.shape).to(t_res.device)) * np.clip(initial_region / gradient_variance,
+                                                                                   a_min=0,
+                                                                                   a_max=0.01)
             x_res_region_sample_list.append(x_res + x_region_sample)
             t_res_region_sample_list.append(t_res + t_region_sample)
         x_res_region_sample = torch.cat(x_res_region_sample_list, dim=0)
@@ -153,8 +162,11 @@ if not os.path.exists('./results/'):
 torch.save(model.state_dict(), f'./results/1dwave_{args.model}_region.pt')
 
 # Visualize PINNs
+if args.model == 'PINNsFormer' or args.model == 'PINNsFormer_Enc_Only':
+    res_test = make_time_sequence(res_test, num_step=5, step=1e-4)
+
 res_test = torch.tensor(res_test, dtype=torch.float32, requires_grad=True).to(device)
-x_test, t_test = res_test[:, 0:1], res_test[:, 1:2]
+x_test, t_test = res_test[:, ..., 0:1], res_test[:, ..., 1:2]
 
 with torch.no_grad():
     pred = model(x_test, t_test)[:, 0:1]

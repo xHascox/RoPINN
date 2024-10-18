@@ -101,7 +101,6 @@ class Model(nn.Module):
         self.linear_emb = nn.Linear(in_dim, hidden_dim)
 
         self.encoder = Encoder(hidden_dim, num_layer, heads)
-        self.decoder = Decoder(hidden_dim, num_layer, heads)
         self.linear_out = nn.Sequential(*[
             nn.Linear(hidden_dim, hidden_d_ff),
             WaveAct(),
@@ -113,8 +112,6 @@ class Model(nn.Module):
     def forward(self, x, t):
         src = torch.cat((x, t), dim=-1)
         src = self.linear_emb(src)
-
         e_outputs = self.encoder(src)
-        d_output = self.decoder(src, e_outputs)
-        output = self.linear_out(d_output)
+        output = self.linear_out(e_outputs)
         return output
