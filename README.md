@@ -1,6 +1,6 @@
 # RoPINN (NeurIPS 2024)
 
-RoPINN: Region Optimized Physics-Informed Neural Networks. See [Paper](https://arxiv.org/abs/2405.14369).
+RoPINN: Region Optimized Physics-Informed Neural Networks. See [Paper](https://arxiv.org/abs/2405.14369) or [Slides](https://wuhaixu2016.github.io/pdf/NeurIPS2024_RoPINN.pdf).
 
 This paper proposes and theoretically studies a new training paradigm of PINNs as **region optimization** and presents [RoPINN](https://arxiv.org/abs/2405.14369) as a practical algorithm,  which can bring the following benefits:
 
