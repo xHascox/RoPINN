@@ -30,7 +30,7 @@ We present RoPINN for PINN training based on Monte Carlo sampling, which can eff
 
 ## Get Started
 
-1. Install Python 3.8 or Python 3.9 and Pytorch 1.13.0. For convenience, execute the following command.
+1. Install Python 3.8 or Python 3.9 and **Pytorch 1.13.0**. For convenience, execute the following command.
 
 ```shell
 pip install -r requirements.txt
