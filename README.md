@@ -1,3 +1,11 @@
+# Reproduction of RoPINN
+
+Our study focuses on evaluating the effectiveness of RoPINN in solving partial differential
+equations (PDEs) and conducting extensive hyperparameter tuning to validate the robust-
+ness and reliability of the original claim. Furthermore, we test the variability robustness
+under different seeds as well as the behaviour with disabled region size calibration
+
+
 # RoPINN (NeurIPS 2024)
 
 RoPINN: Region Optimized Physics-Informed Neural Networks. See [Paper](https://arxiv.org/abs/2405.14369) or [Slides](https://wuhaixu2016.github.io/pdf/NeurIPS2024_RoPINN.pdf).
